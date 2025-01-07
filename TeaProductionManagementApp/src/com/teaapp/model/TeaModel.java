@@ -13,7 +13,7 @@ public class TeaModel {
     private String harvestingLocation;
     private String teaType;
     private String quality;
-    private LocalDate harvestedDate; // New field for harvested date
+    private String harvestedDate; // New field for harvested date
     private String exportStatus;    // New field for export status
 
     // Default Constructor
@@ -22,7 +22,7 @@ public class TeaModel {
 
     // Parameterized Constructor
     public TeaModel(int teaId, String teaName, double pricePerKg, String harvestingLocation,
-                    String teaType, String quality, LocalDate harvestedDate, String exportStatus) {
+                    String teaType, String quality, String harvestedDate, String exportStatus) {
         this.teaId = teaId;
         this.teaName = teaName;
         this.pricePerKg = pricePerKg;
@@ -82,11 +82,11 @@ public class TeaModel {
         this.quality = quality;
     }
 
-    public LocalDate getHarvestedDate() {
+    public String getHarvestedDate() {
         return harvestedDate;
     }
 
-    public void setHarvestedDate(LocalDate harvestedDate) {
+    public void setHarvestedDate(String harvestedDate) {
         this.harvestedDate = harvestedDate;
     }
 

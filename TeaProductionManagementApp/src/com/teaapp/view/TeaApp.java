@@ -2,7 +2,11 @@ package com.teaapp.view;
 
 import com.teaapp.model.TeaModel;
 import com.teaapp.controller.ValidationUtil;
-import java.time.LocalDate;
+import com.teaapp.controller.algorithms.BinarySearch;
+import com.teaapp.controller.algorithms.InsertionSort;
+import com.teaapp.controller.algorithms.SelectionSort;
+import com.teaapp.controller.algorithms.MergeSort;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -50,27 +54,27 @@ public class TeaApp extends javax.swing.JFrame {
         spTblStudent = new javax.swing.JScrollPane();
         tblTea = new javax.swing.JTable();
         lblTblStudentTitle = new javax.swing.JLabel();
-        AboutUsPanel = new javax.swing.JPanel();
-        AboutUsImage = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        searchField = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         locationField = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        TeaID = new javax.swing.JLabel();
+        TeaName = new javax.swing.JLabel();
         teaIDField = new javax.swing.JTextField();
         nameField = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
+        Price = new javax.swing.JLabel();
         priceField = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        HarvestingLocation = new javax.swing.JLabel();
         harvestField = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        teaTypeField = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        qualityField = new javax.swing.JTextField();
+        TeaType = new javax.swing.JLabel();
+        Quality = new javax.swing.JLabel();
         addbtn = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
+        qualityField = new javax.swing.JComboBox<>();
+        teaTypeField = new javax.swing.JComboBox<>();
+        SelectionSortbtn = new javax.swing.JButton();
+        InsertionSort = new javax.swing.JButton();
+        MergeSorting = new javax.swing.JButton();
+        HarvestedDate = new javax.swing.JLabel();
         HarvestDateField = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
         ExportField = new javax.swing.JComboBox<>();
@@ -78,6 +82,11 @@ public class TeaApp extends javax.swing.JFrame {
         UpdateButton = new javax.swing.JButton();
         ClearButton = new javax.swing.JButton();
         AdminControlBG = new javax.swing.JLabel();
+        AboutUsPanel = new javax.swing.JPanel();
+        AboutUsImage = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         LogoutButton = new javax.swing.JButton();
         MainBarSloganLabel = new javax.swing.JLabel();
         LoginScreenPanel = new javax.swing.JPanel();
@@ -233,6 +242,14 @@ public class TeaApp extends javax.swing.JFrame {
         lblTblStudentTitle.setText("Tea Information");
         lblTblStudentTitle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(234, 192, 32)));
 
+        searchBtn.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
+        searchBtn.setText("search");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout EmployeeListPanelLayout = new javax.swing.GroupLayout(EmployeeListPanel);
         EmployeeListPanel.setLayout(EmployeeListPanelLayout);
         EmployeeListPanelLayout.setHorizontalGroup(
@@ -241,79 +258,40 @@ public class TeaApp extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(EmployeeListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(EmployeeListPanelLayout.createSequentialGroup()
+                        .addComponent(spTblStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 1059, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(51, Short.MAX_VALUE))
+                    .addGroup(EmployeeListPanelLayout.createSequentialGroup()
                         .addComponent(lblTblStudentTitle)
-                        .addGap(0, 985, Short.MAX_VALUE))
-                    .addComponent(spTblStudent))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchBtn)
+                        .addGap(352, 352, 352))))
         );
         EmployeeListPanelLayout.setVerticalGroup(
             EmployeeListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(EmployeeListPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTblStudentTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spTblStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(EmployeeListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTblStudentTitle)
+                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(spTblStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         maintabpanel.addTab("Tea List", EmployeeListPanel);
-
-        AboutUsPanel.setBackground(new java.awt.Color(44, 87, 7));
-        AboutUsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(234, 192, 32)));
-
-        AboutUsImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/teaeapp/resources/shot-teas copy.png"))); // NOI18N
-
-        jLabel1.setText("jLabel1");
-
-        jLabel2.setText("jLabel2");
-
-        jLabel3.setText("jLabel3");
-
-        javax.swing.GroupLayout AboutUsPanelLayout = new javax.swing.GroupLayout(AboutUsPanel);
-        AboutUsPanel.setLayout(AboutUsPanelLayout);
-        AboutUsPanelLayout.setHorizontalGroup(
-            AboutUsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AboutUsPanelLayout.createSequentialGroup()
-                .addComponent(AboutUsImage, javax.swing.GroupLayout.PREFERRED_SIZE, 1114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(AboutUsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)))
-        );
-        AboutUsPanelLayout.setVerticalGroup(
-            AboutUsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AboutUsPanelLayout.createSequentialGroup()
-                .addGap(151, 151, 151)
-                .addComponent(jLabel3)
-                .addContainerGap(206, Short.MAX_VALUE))
-            .addGroup(AboutUsPanelLayout.createSequentialGroup()
-                .addGroup(AboutUsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AboutUsPanelLayout.createSequentialGroup()
-                        .addGroup(AboutUsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(AboutUsPanelLayout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addComponent(jLabel1))
-                            .addGroup(AboutUsPanelLayout.createSequentialGroup()
-                                .addGap(64, 64, 64)
-                                .addComponent(jLabel2)))
-                        .addGap(0, 265, Short.MAX_VALUE))
-                    .addComponent(AboutUsImage, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        maintabpanel.addTab("About Us", AboutUsPanel);
         maintabpanel.addTab("Contact US", jTabbedPane1);
 
         locationField.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setFont(new java.awt.Font("ITF Devanagari", 1, 16)); // NOI18N
-        jLabel4.setText("TEA ID");
-        locationField.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+        TeaID.setFont(new java.awt.Font("ITF Devanagari", 1, 16)); // NOI18N
+        TeaID.setText("TEA ID");
+        locationField.add(TeaID, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
-        jLabel5.setText("TEA NAME");
-        locationField.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+        TeaName.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
+        TeaName.setText("TEA NAME");
+        locationField.add(TeaName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
         teaIDField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,37 +301,23 @@ public class TeaApp extends javax.swing.JFrame {
         locationField.add(teaIDField, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 54, 100, -1));
         locationField.add(nameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 144, 100, -1));
 
-        jLabel6.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
-        jLabel6.setText("PRICE PER KG");
-        locationField.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
+        Price.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
+        Price.setText("PRICE PER KG");
+        locationField.add(Price, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
         locationField.add(priceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 54, 100, -1));
 
-        jLabel7.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
-        jLabel7.setText("HARVESTING LOCATION");
-        locationField.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, -1, -1));
+        HarvestingLocation.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
+        HarvestingLocation.setText("HARVESTING LOCATION");
+        locationField.add(HarvestingLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, -1, -1));
         locationField.add(harvestField, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 233, 100, -1));
 
-        jLabel8.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
-        jLabel8.setText("TEA TYPE");
-        locationField.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        TeaType.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
+        TeaType.setText("TEA TYPE");
+        locationField.add(TeaType, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
-        teaTypeField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                teaTypeFieldActionPerformed(evt);
-            }
-        });
-        locationField.add(teaTypeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 233, 99, -1));
-
-        jLabel9.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
-        jLabel9.setText("QUALITY");
-        locationField.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 120, -1, -1));
-
-        qualityField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                qualityFieldActionPerformed(evt);
-            }
-        });
-        locationField.add(qualityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 144, 99, -1));
+        Quality.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
+        Quality.setText("QUALITY");
+        locationField.add(Quality, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 120, -1, -1));
 
         addbtn.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
         addbtn.setText("ADD");
@@ -364,9 +328,47 @@ public class TeaApp extends javax.swing.JFrame {
         });
         locationField.add(addbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 297, 81, 34));
 
-        jLabel11.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
-        jLabel11.setText("HARVESTED DATE");
-        locationField.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, -1, -1));
+        qualityField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Premium", "Standard", "Economy" }));
+        qualityField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                qualityFieldActionPerformed(evt);
+            }
+        });
+        locationField.add(qualityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, 30));
+
+        teaTypeField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Black", "Green", "White", "Herbal", " " }));
+        locationField.add(teaTypeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+
+        SelectionSortbtn.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
+        SelectionSortbtn.setText("Sort By ID");
+        SelectionSortbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelectionSortbtnActionPerformed(evt);
+            }
+        });
+        locationField.add(SelectionSortbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, -1, -1));
+
+        InsertionSort.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
+        InsertionSort.setText("Sort By Tea Name");
+        InsertionSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InsertionSortActionPerformed(evt);
+            }
+        });
+        locationField.add(InsertionSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 140, -1, 30));
+
+        MergeSorting.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
+        MergeSorting.setText("Sort By Tea Type");
+        MergeSorting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MergeSortingActionPerformed(evt);
+            }
+        });
+        locationField.add(MergeSorting, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, -1, -1));
+
+        HarvestedDate.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
+        HarvestedDate.setText("HARVESTED DATE");
+        locationField.add(HarvestedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, -1, -1));
         locationField.add(HarvestDateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 57, 130, -1));
 
         jLabel12.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
@@ -413,6 +415,48 @@ public class TeaApp extends javax.swing.JFrame {
         locationField.add(AdminControlBG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 370));
 
         maintabpanel.addTab("Admin Control", locationField);
+
+        AboutUsPanel.setBackground(new java.awt.Color(44, 87, 7));
+        AboutUsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(234, 192, 32)));
+
+        AboutUsImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/teaeapp/resources/shot-teas copy.png"))); // NOI18N
+
+        jLabel1.setText("jLabel1");
+
+        jLabel2.setText("jLabel2");
+
+        jLabel3.setText("jLabel3");
+
+        javax.swing.GroupLayout AboutUsPanelLayout = new javax.swing.GroupLayout(AboutUsPanel);
+        AboutUsPanel.setLayout(AboutUsPanelLayout);
+        AboutUsPanelLayout.setHorizontalGroup(
+            AboutUsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AboutUsPanelLayout.createSequentialGroup()
+                .addComponent(AboutUsImage, javax.swing.GroupLayout.PREFERRED_SIZE, 1114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(196, 196, 196)
+                .addGroup(AboutUsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)))
+        );
+        AboutUsPanelLayout.setVerticalGroup(
+            AboutUsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(AboutUsImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(AboutUsPanelLayout.createSequentialGroup()
+                .addGroup(AboutUsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AboutUsPanelLayout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jLabel1))
+                    .addGroup(AboutUsPanelLayout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel2))
+                    .addGroup(AboutUsPanelLayout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addComponent(jLabel3)))
+                .addContainerGap(206, Short.MAX_VALUE))
+        );
+
+        maintabpanel.addTab("About Us", AboutUsPanel);
 
         LogoutButton.setFont(new java.awt.Font("ITF Devanagari", 1, 14)); // NOI18N
         LogoutButton.setText("Logout");
@@ -667,24 +711,26 @@ public class TeaApp extends javax.swing.JFrame {
     }
     LinkedList<TeaModel> teaList = new LinkedList<>(); // Use TeaModel directly for type safety
 
-// Method to initialize data, including tea list and table
 private void initializeData() {
     teaList = new LinkedList<>();
-    
-    // Adding sample data with the new fields
+
+    // Adding sample data with all fields properly initialized
     registerTea(new TeaModel(
-        101, "Darjeeling", 1200.50, "Himalayan Foothills", 
-        "Black", "Premium", LocalDate.of(2023, 1, 15), "Yes"
+        101, "Darjeeling", 1200.50, "Himalayan Foothills",
+        "Black", "Premium", "2023-01-01", "Yes"
     ));
     registerTea(new TeaModel(
-        102, "Assam", 850.75, "Brahmaputra Valley", 
-        "Green", "Standard", LocalDate.of(2023, 3, 20), "No"
+        102, "Assam", 850.75, "Brahmaputra Valley",
+        "Green", "Standard", "2023- 3- 20", "No"
     ));
+
+    // Configure table selection mode
     tblTea.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-     // Load data into the table
+
+    // Load data into the table
     loadDataToTable();
 
-    // Add row selection listener
+    // Add row selection listener to populate fields on selection
     tblTea.getSelectionModel().addListSelectionListener(event -> {
         if (!event.getValueIsAdjusting() && tblTea.getSelectedRow() != -1) {
             int selectedRow = tblTea.getSelectedRow();
@@ -692,15 +738,14 @@ private void initializeData() {
             nameField.setText(tblTea.getValueAt(selectedRow, 1).toString());
             priceField.setText(tblTea.getValueAt(selectedRow, 2).toString());
             harvestField.setText(tblTea.getValueAt(selectedRow, 3).toString());
-            teaTypeField.setText(tblTea.getValueAt(selectedRow, 4).toString());
-            qualityField.setText(tblTea.getValueAt(selectedRow, 5).toString());
+            teaTypeField.setSelectedItem(tblTea.getValueAt(selectedRow, 4).toString());
+            qualityField.setSelectedItem(tblTea.getValueAt(selectedRow, 5).toString());
             HarvestDateField.setText(tblTea.getValueAt(selectedRow, 6).toString());
             ExportField.setSelectedItem(tblTea.getValueAt(selectedRow, 7).toString());
         }
     });
-
-
 }
+
     
     // Method to simulate loading progress
     private void startProgress() {
@@ -786,8 +831,8 @@ private void initializeData() {
         nameField.setText("");
         priceField.setText("");
         harvestField.setText("");
-        teaTypeField.setText("");
-        qualityField.setText("");
+        teaTypeField.setSelectedIndex(0);
+        qualityField.setSelectedIndex(0);
         HarvestDateField.setText("");
         ExportField.setSelectedIndex(0); // Reset combo box to default value
     }//GEN-LAST:event_ClearButtonActionPerformed
@@ -814,8 +859,8 @@ private void initializeData() {
             String newName = nameField.getText().trim();
             String newPrice = priceField.getText().trim();
             String newLocation = harvestField.getText().trim();
-            String newType = teaTypeField.getText().trim();
-            String newQuality = qualityField.getText().trim();
+            String newType = (String) teaTypeField.getSelectedItem();
+            String newQuality = (String) qualityField.getSelectedItem();
             String newDate = HarvestDateField.getText().trim();
             String newExportStatus = (String) ExportField.getSelectedItem();
 
@@ -892,8 +937,8 @@ private void initializeData() {
             String teaName = nameField.getText();
             String pricePerKgText = priceField.getText();
             String harvestingLocation = harvestField.getText();
-            String teaType = teaTypeField.getText();
-            String quality = qualityField.getText();
+            String teaType = (String) teaTypeField.getSelectedItem();
+            String quality = (String) qualityField.getSelectedItem();
             String harvestedDate = HarvestDateField.getText();
             String exportStatus = (String) ExportField.getSelectedItem();
 
@@ -911,7 +956,7 @@ private void initializeData() {
                 throw new IllegalArgumentException("Harvesting Location must be between 1 to 100 characters.");
             }
             if (!ValidationUtil.isValidTeaType(teaType)) {
-                throw new IllegalArgumentException("Tea Type must be one of: Black, Green, White, Oolong, Herbal.");
+                throw new IllegalArgumentException("Tea Type must be one of: Black, Green, White, Herbal.");
             }
             if (!ValidationUtil.isValidQuality(quality)) {
                 throw new IllegalArgumentException("Quality must be one of: Premium, Standard, Economy.");
@@ -951,19 +996,11 @@ private void initializeData() {
             nameField.setText("");
             priceField.setText("");
             harvestField.setText("");
-            teaTypeField.setText("");
-            qualityField.setText("");
+            teaTypeField.setSelectedIndex(0);
+            qualityField.setSelectedIndex(0);
             HarvestDateField.setText("");
             ExportField.setSelectedIndex(0);
     }//GEN-LAST:event_addbtnActionPerformed
-
-    private void qualityFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qualityFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_qualityFieldActionPerformed
-
-    private void teaTypeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teaTypeFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_teaTypeFieldActionPerformed
 
     private void teaIDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teaIDFieldActionPerformed
         // TODO add your handling code here:
@@ -974,6 +1011,263 @@ private void initializeData() {
         maintabpanel.setSelectedIndex(3);
     }//GEN-LAST:event_LearnMoreButtonActionPerformed
 
+    private void qualityFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qualityFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_qualityFieldActionPerformed
+
+    private void SelectionSortbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectionSortbtnActionPerformed
+         try {
+        // Create an instance of SelectionSort
+        SelectionSort selectionSort = new SelectionSort();
+        
+        // Get the current list of teas from table
+        List<TeaModel> unsortedList = new ArrayList<>(getAllTeaData());
+        
+        // Sort by teaId in ascending order
+        List<TeaModel> sortedList = selectionSort.sort(unsortedList, "teaId", false);
+        
+        // Update the UI with sorted data
+        updateTableWithSortedData(sortedList);
+        
+        // Show success message
+        JOptionPane.showMessageDialog(this, 
+            "Data sorted successfully by ID",
+            "Sort Complete",
+            JOptionPane.INFORMATION_MESSAGE);
+            
+    } catch (Exception e) {
+        // Handle any errors
+        JOptionPane.showMessageDialog(this,
+            "An error occurred while sorting: " + e.getMessage(),
+            "Sort Error",
+            JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_SelectionSortbtnActionPerformed
+
+    private void InsertionSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertionSortActionPerformed
+        // TODO add your handling code here:
+        try {
+        // Ensure the tea list is not empty
+        DefaultTableModel model = (DefaultTableModel) tblTea.getModel();
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "The table is empty. Please add data before sorting.", "Sort Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Sync teaList with table data
+        teaList.clear();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            teaList.add(new TeaModel(
+                Integer.parseInt(model.getValueAt(i, 0).toString()), // Tea ID
+                model.getValueAt(i, 1).toString(),                  // Tea Name
+                Double.parseDouble(model.getValueAt(i, 2).toString()), // Price per Kg
+                model.getValueAt(i, 3).toString(),                  // Harvesting Location
+                model.getValueAt(i, 4).toString(),                  // Tea Type
+                model.getValueAt(i, 5).toString(),                  // Quality
+                model.getValueAt(i, 6).toString(),                  // Harvested Date
+                model.getValueAt(i, 7).toString()                   // Export Status
+            ));
+        }
+
+        // Perform sorting using Insertion Sort
+        InsertionSort sorter = new InsertionSort();
+        sorter.sortByTeaName(teaList);
+
+        // Clear the table and repopulate with sorted data
+        model.setRowCount(0);
+        for (TeaModel tea : teaList) {
+            model.addRow(new Object[]{
+                tea.getTeaId(),
+                tea.getTeaName(),
+                tea.getPricePerKg(),
+                tea.getHarvestingLocation(),
+                tea.getTeaType(),
+                tea.getQuality(),
+                tea.getHarvestedDate(),
+                tea.getExportStatus()
+            });
+        }
+
+        JOptionPane.showMessageDialog(this, "Tea list sorted by Name in ascending order!", "Sort Success", JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "An error occurred while sorting: " + e.getMessage(), "Sort Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_InsertionSortActionPerformed
+
+    private void MergeSortingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MergeSortingActionPerformed
+        try {
+        // Create instance of MergeSort
+        MergeSort sorter = new MergeSort();
+        
+        // Get the current data from table
+        List<TeaModel> teaList = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) tblTea.getModel();
+        
+        // Populate teaList from table data
+        for (int i = 0; i < model.getRowCount(); i++) {
+            TeaModel tea = new TeaModel();
+            tea.setTeaId((Integer) model.getValueAt(i, 0));
+            tea.setTeaName((String) model.getValueAt(i, 1));
+            tea.setPricePerKg((Double) model.getValueAt(i, 2));
+            tea.setHarvestingLocation((String) model.getValueAt(i, 3));
+            tea.setTeaType((String) model.getValueAt(i, 4));
+            tea.setQuality((String) model.getValueAt(i, 5));
+            tea.setHarvestedDate((String) model.getValueAt(i, 6));
+            tea.setExportStatus((String) model.getValueAt(i, 7));
+            teaList.add(tea);
+        }
+        
+        // Get sort order from checkbox
+        boolean isDescending = true;
+        
+        // Sort the data
+        List<TeaModel> sortedList = sorter.sortByTeaType(teaList, isDescending);
+        
+        // Update table with sorted data
+        model.setRowCount(0); // Clear table rows
+        for (TeaModel tea : sortedList) {
+            model.addRow(new Object[]{
+                tea.getTeaId(),
+                tea.getTeaName(),
+                tea.getPricePerKg(),
+                tea.getHarvestingLocation(),
+                tea.getTeaType(),
+                tea.getQuality(),
+                tea.getHarvestedDate(),
+                tea.getExportStatus()
+            });
+        }
+        
+        JOptionPane.showMessageDialog(this, "Table sorted by TeaType in " +
+                (isDescending ? "descending" : "ascending") + " order.", 
+                "Sort Success", 
+                JOptionPane.INFORMATION_MESSAGE);
+                
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, 
+            "An error occurred while sorting: " + e.getMessage(), 
+            "Sort Error", 
+            JOptionPane.ERROR_MESSAGE);
+    }
+
+    }//GEN-LAST:event_MergeSortingActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        // TODO add your handling code here:
+         try {
+        // Get the search term from the text field
+        String searchTerm = searchField.getText().trim();
+        
+        // Validate search input
+        if (searchTerm.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Please enter a tea name to search.",
+                "Search Error",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Get current table data
+        DefaultTableModel model = (DefaultTableModel) tblTea.getModel();
+        List<TeaModel> teaList = new ArrayList<>();
+        
+        for (int i = 0; i < model.getRowCount(); i++) {
+            TeaModel tea = new TeaModel();
+            tea.setTeaId((Integer) model.getValueAt(i, 0));
+            tea.setTeaName((String) model.getValueAt(i, 1));
+            tea.setPricePerKg((Double) model.getValueAt(i, 2));
+            tea.setHarvestingLocation((String) model.getValueAt(i, 3));
+            tea.setTeaType((String) model.getValueAt(i, 4));
+            tea.setQuality((String) model.getValueAt(i, 5));
+            tea.setHarvestedDate((String) model.getValueAt(i, 6));
+            tea.setExportStatus((String) model.getValueAt(i, 7));
+            teaList.add(tea);
+        }
+        
+        // Sort the list by tea name first (binary search requires sorted list)
+        teaList.sort((t1, t2) -> t1.getTeaName().compareToIgnoreCase(t2.getTeaName()));
+        
+        // Perform binary search
+        BinarySearch searcher = new BinarySearch();
+        TeaModel result = searcher.searchByName(searchTerm, teaList, 0, teaList.size() - 1);
+        
+        if (result != null) {
+            // Clear table selection
+            tblTea.clearSelection();
+            
+            // Highlight the found row
+            for (int i = 0; i < model.getRowCount(); i++) {
+                if (model.getValueAt(i, 1).toString().equalsIgnoreCase(result.getTeaName())) {
+                    tblTea.setRowSelectionInterval(i, i);
+                    tblTea.scrollRectToVisible(tblTea.getCellRect(i, 0, true));
+                    break;
+                }
+            }
+            
+            // Show success message
+            JOptionPane.showMessageDialog(this,
+                "Tea found: " + result.getTeaName(),
+                "Search Success",
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            // Show not found message
+            JOptionPane.showMessageDialog(this,
+                "No tea found with name: " + searchTerm,
+                "Search Result",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "Error during search: " + e.getMessage(),
+            "Search Error",
+            JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    // Helper method to update the table with sorted data
+private void updateTableWithSortedData(List<TeaModel> sortedList) {
+    // Clear existing table data
+    DefaultTableModel model = (DefaultTableModel) tblTea.getModel();
+    model.setRowCount(0);
+    
+    // Add sorted data to table
+    for (TeaModel tea : sortedList) {
+        model.addRow(new Object[]{
+            tea.getTeaId(),
+            tea.getTeaName(),
+            tea.getPricePerKg(),
+            tea.getHarvestingLocation(),
+            tea.getTeaType(),
+            tea.getQuality(),
+            tea.getHarvestedDate(),
+            tea.getExportStatus()
+        });
+    }
+}
+
+// Helper method to get all tea data from the table
+private List<TeaModel> getAllTeaData() {
+    List<TeaModel> teaLists = new ArrayList<>();
+    DefaultTableModel model = (DefaultTableModel) tblTea.getModel();
+    
+    for (int i = 0; i < model.getRowCount(); i++) {
+        TeaModel tea = new TeaModel();
+        tea.setTeaId((Integer) model.getValueAt(i, 0));
+        tea.setTeaName((String) model.getValueAt(i, 1));
+        tea.setPricePerKg((Double) model.getValueAt(i, 2));
+        tea.setHarvestingLocation((String) model.getValueAt(i, 3));
+        tea.setTeaType((String) model.getValueAt(i, 4));
+        tea.setQuality((String) model.getValueAt(i, 5));
+        tea.setHarvestedDate((String) model.getValueAt(i, 6));
+        tea.setExportStatus((String) model.getValueAt(i, 7));
+        teaLists.add(tea);
+    }
+    
+    return teaLists;
+}
+    
     private void loadDataToTable() {
         DefaultTableModel model = (DefaultTableModel) tblTea.getModel();
         model.setRowCount(0); // Clear existing rows
@@ -982,7 +1276,7 @@ private void initializeData() {
                 TeaModel tea = (TeaModel) obj;
                 model.addRow(new Object[]{
                     tea.getTeaId(), tea.getTeaName(), tea.getPricePerKg(),
-                    tea.getHarvestingLocation(), tea.getTeaType(), tea.getQuality()
+                    tea.getHarvestingLocation(), tea.getTeaType(), tea.getQuality(), tea.getHarvestedDate(), tea.getExportStatus()
                 });
             }
         }
@@ -1036,7 +1330,10 @@ private void initializeData() {
     private javax.swing.JComboBox<String> ExportField;
     private javax.swing.JLabel ForgetPassLabel;
     private javax.swing.JFormattedTextField HarvestDateField;
+    private javax.swing.JLabel HarvestedDate;
+    private javax.swing.JLabel HarvestingLocation;
     private javax.swing.JPanel HomePanel;
+    private javax.swing.JButton InsertionSort;
     private javax.swing.JButton LearnMoreButton;
     private javax.swing.JPanel LeftLoginPanel;
     private javax.swing.JPanel LoadingScreenPanel;
@@ -1056,23 +1353,23 @@ private void initializeData() {
     private javax.swing.JLabel MainPageS1;
     private javax.swing.JLabel MainPageS2;
     private javax.swing.JPanel MainScreenPanel;
+    private javax.swing.JButton MergeSorting;
     private javax.swing.JLabel PasswordLabel;
+    private javax.swing.JLabel Price;
+    private javax.swing.JLabel Quality;
+    private javax.swing.JButton SelectionSortbtn;
+    private javax.swing.JLabel TeaID;
     private javax.swing.JLabel TeaImageLabel;
+    private javax.swing.JLabel TeaName;
+    private javax.swing.JLabel TeaType;
     private javax.swing.JButton UpdateButton;
     private javax.swing.JLabel UserNameLabel;
     private javax.swing.JButton addbtn;
     private javax.swing.JTextField harvestField;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblTblStudentTitle;
     private javax.swing.JPanel locationField;
@@ -1081,11 +1378,13 @@ private void initializeData() {
     private javax.swing.JProgressBar pgbarloading;
     private javax.swing.JTextField priceField;
     private javax.swing.JPasswordField pwdFldLogin;
-    private javax.swing.JTextField qualityField;
+    private javax.swing.JComboBox<String> qualityField;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTextField searchField;
     private javax.swing.JScrollPane spTblStudent;
     private javax.swing.JTable tblTea;
     private javax.swing.JTextField teaIDField;
-    private javax.swing.JTextField teaTypeField;
+    private javax.swing.JComboBox<String> teaTypeField;
     private javax.swing.JTextField txtFldLoginUsername;
     // End of variables declaration//GEN-END:variables
 }
