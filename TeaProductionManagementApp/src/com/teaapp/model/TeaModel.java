@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author Prithivi
+ * @author ronik
  */
 public class TeaModel {
     private int teaId;
